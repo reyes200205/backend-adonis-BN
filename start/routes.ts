@@ -6,6 +6,7 @@ const PartidasController = () => import('../app/controllers/partidas_controller.
 const MovimientosController = () => import('../app/controllers/movimientos_controller.js')
 const TableroController = () => import('../app/controllers/tableros_controller.js')
 const AuthController = () => import('../app/controllers/auth_controller.js')
+const EstadisticasController = () => import('../app/controllers/estadisticas_controller.js')
 
 
 
@@ -41,5 +42,12 @@ router.group(() => {
   router.post('/tablero/:id/disparar', [TableroController, 'disparar'])
   
 }).middleware([middleware.auth()])
+
+router.group(() => {
+  router.get('/resumen', [EstadisticasController, 'index'])
+  router.get('/partidas/:tipo', [EstadisticasController, 'partidas'])
+  router.get('/partida/:id', [EstadisticasController, 'detalle'])
+}).prefix('/estadisticas')
+.middleware([middleware.auth()])
 
 
